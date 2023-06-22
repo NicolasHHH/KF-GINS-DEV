@@ -1,0 +1,42 @@
+# To Do
+
+### 研究学习IMU误差
+
+1. 研究对像：
+    IMU的误差，包括零偏、尺度因子、（非正交性、噪声等）
+
+2. 研究方法：
+    绘制随时间变化曲线，回顾课程相关内容，记录
+
+### 初始化
+
+IMU噪声初始化：
+
+
+arw：角随机游走（Angle Random Walk），给出的单位是度/平方根小时（deg/sqrt(hr)），这个参数描述的是IMU中陀螺仪的随机噪声。
+vrw：速度随机游走（Velocity Random Walk），给出的单位是米/秒/平方根小时（m/s/sqrt(hr)），这个参数描述的是IMU中加速度计的随机噪声。
+gbstd：陀螺仪零偏稳定度（Gyro Bias Stability），给出的单位是度/小时（deg/hr），这是描述陀螺仪在一个小时内零偏的变化情况。
+abstd：加速度计零偏稳定度（Accelerometer Bias Stability），给出的单位是mGal，这是描述加速度计在一个小时内零偏的变化情况。
+gsstd：陀螺仪刻度因子稳定度（Gyro Scale Factor Stability），给出的单位是ppm（parts per million，百万分之一），这是描述陀螺仪在一个小时内刻度因子的变化情况。
+asstd：加速度计刻度因子稳定度（Accelerometer Scale Factor Stability），给出的单位是ppm，这是描述加速度计在一个小时内刻度因子的变化情况。
+corrtime：相关时间（Correlation Time），给出的单位是小时（hr），这是描述IMU噪声自相关性消失的时间。
+
+antlever：天线杆臂参数，描述了天线相对于IMU的位置，给出的单位是米（m）。这三个数值分别对应于前向（forward）、右向（right）和下向（down）的位移。
+
+IMU噪声初始化如何计算？
+
+
+
+
+### 附录
+
+1. 高斯一阶马尔可夫模型
+
+2. 随机游走
+- 是个markov过程，下一步在哪只取决于当前位置，与历史无关，因此无法预测。
+
+
+3. mGal
+
+4. ppm单位感知
+
