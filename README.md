@@ -2,6 +2,12 @@
 
 [[中]](./README_CN.md) &ensp; [[EN]](./README.md)
 
+
+added support for 4seasons dataset.
+
+added notes and comments.
+
+
 ## An EKF-Based GNSS/INS Integrated Navigation System
 
 ## Introduction
@@ -132,7 +138,8 @@ cd ~/KF-GINS
 
 # Wait until the program finish
 ```
-- **Release 版本和 Debug 版本运行速度有显著区别。 Release 比 Debug 快将近十倍。 为什么？** 
+
+- **Release 版本和 Debug 版本运行速度有显著区别。 Release 比 Debug 快将近十倍。 为什么？**
 
 ### 1.6 Debug by VSCode
 
@@ -165,10 +172,7 @@ The debug operation is as follows:
 - velocity: (Nv, Ev, Dv) the IMU velocity to the Earth projected in the navigation reference frame (north speed-east speed-down speed)
 - attitude: (ZYX) IMU attitude to navigation frame (quaternion, direction consine matrix, or euler angles. euler angles are defined as yaw-pitch-roll, ZYX rotation order)
 
-
-
 `what is ellipsoide height ? `
-
 
 **IMU noise model:**
 
@@ -182,16 +186,18 @@ For more details on the algorithm, please refer to [惯性导航原理与GNSS/IN
 
 - The IMU text file format is defined as:
 
-| Columns | Data description                | Units   |
-| ------- | ------------------------------- | ------- |
+
+| Columns | Data description                | Units |
+| ------- | ------------------------------- | ----- |
 | 1       | GNSS seconds of week            | $s$   |
 | 2~4     | X-Y-Z axes incremental angles   | $rad$ |
 | 5~7     | X-Y-Z axes incremental velocity | $m/s$ |
 
 - The GNSS position text file format is defined as:
 
-| Columns | Data description               | Units   |
-| ------- | ------------------------------ | ------- |
+
+| Columns | Data description               | Units |
+| ------- | ------------------------------ | ----- |
 | 1       | GNSS seconds of  week          | $s$   |
 | 2       | latitude                       | $deg$ |
 | 3       | longitude                      | $deg$ |
@@ -200,9 +206,10 @@ For more details on the algorithm, please refer to [惯性导航原理与GNSS/IN
 
 - The text file format of the navigation result and the ground-truth is defined as:
 
-| Columns | Data description                 | Units   |
-| ------- | -------------------------------- | ------- |
-| 1       | GNSS week                        | -       |
+
+| Columns | Data description                 | Units |
+| ------- | -------------------------------- | ----- |
+| 1       | GNSS week                        | -     |
 | 2       | GNSS seconds of week             | $s$   |
 | 3       | latitude                         | $deg$ |
 | 4       | longitude                        | $deg$ |
@@ -212,8 +219,9 @@ For more details on the algorithm, please refer to [惯性导航原理与GNSS/IN
 
 - The IMU error text file format(all double data) is defined as:
 
-| Columns | Data description                       | Units     |
-| ------- | -------------------------------------- | --------- |
+
+| Columns | Data description                       | Units   |
+| ------- | -------------------------------------- | ------- |
 | 1       | GNSS seconds of week                   | $s$     |
 | 2~4     | X-Y-Z axes gyroscope biases            | $deg/h$ |
 | 5~7     | X-Y-Z axes accelerometer biases        | $mGal$  |
@@ -222,8 +230,9 @@ For more details on the algorithm, please refer to [惯性导航原理与GNSS/IN
 
 - The state STD text file format(all double data) is defined as:
 
-| Columns | Data description                          | Units     |
-| ------- | ----------------------------------------- | --------- |
+
+| Columns | Data description                          | Units   |
+| ------- | ----------------------------------------- | ------- |
 | 1       | GNSS seconds of week                      | $s$     |
 | 2~4     | 3-D position STD (north-east-down)        | $m$     |
 | 5~7     | 3-D velocity STD (north-east-down)        | $m/s$   |
