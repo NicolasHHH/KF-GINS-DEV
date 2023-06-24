@@ -5,8 +5,8 @@
 
 # IMU和GNSS数据文件路径
 # imudata and gnssdata filepath
-imupath: "./dataset/ros_data/imu_to_kfgins_20230622_012013.txt"
-gnsspath: "./dataset/ros_data/gps_to_kfgins_20230622_012013.txt"
+imupath: "./dataset/ros_data/20230619_184246/imu_to_kfgins_20230619_184246.txt"
+gnsspath: "./dataset/ros_data/20230619_184246/gps_to_kfgins_20230619_184246.txt"
 
 # 输出文件夹路径
 # output folder path
@@ -22,14 +22,14 @@ imudatarate: 100
 # 处理时间段，结束时间设置为-1时则处理至IMU文件结束
 # processing interval[s]
 # process until the imufile end if set endtime to -1
-starttime: 343218
+starttime: 146567.155536174774
 endtime: -1
 
 # 初始状态
 # initial state
 # 初始位置, 纬度 经度 高程
 # initial position, latitude, longitude, altitude. [deg, deg, m]
-initpos: [49.8999994439, 8.8999990124, 0.2127893664]
+initpos: [49.8999994439, 8.8999990124, 0.3027893664]
 
 # 初始速度, 北向速度, 东向速度, 垂向速度
 # initial velocity, speed in the directions of north, east and down. [m/s, m/s, m/s]
@@ -37,28 +37,28 @@ initvel: [ 0.0, 0.0, 0.0 ]
 
 # 初始姿态, 欧拉角(ZYX旋转顺序), 横滚, 俯仰, 航向
 # initial attitude, euler angle(ZYX rotation), roll, pitch, yaw [deg, deg, deg]
-initatt: [ 0.0000, 0.0, -90.700 ]
+initatt: [ 0.0000, 0.0, 0.00 ]
 
 # 初始IMU零偏和比例因子, IMU的三个轴(前、右、下)
 # initial IMU bias and scale error, three axes of the imu (forward, right and down)
 initgyrbias: [ 0,0,0 ]    # [deg/h]
 initaccbias: [ 0,0,0 ]    # [mGal]
 initgyrscale: [ 0, 0, 0 ]   # [ppm]
-initaccscale: [ 0, 0, 0 ]   # [ppm]
+initaccscale: [ 0.0, 0.0, 0 ]   # [ppm]
 
 # 初始状态标准差
 # initial state std
 # 初始位置标准差, 导航坐标系下 北向, 东向和垂向
 # initial position std, north, east and down in n-frame. [m, m, m]
-initposstd: [ 1, 1, 1 ]
+initposstd: [ 0.1, 0.1, 1 ]
 
 # 初始速度标准差, 导航坐标系下北向、东向和垂向速度
 # initial velocity std, north, east and down speed in n-frame. [m/s, m/s, m/s]
-initvelstd: [ 1, 1, 1 ]
+initvelstd: [ 0.1, 0.1, 0.001 ]
 
 # 初始姿态标准差, 横滚、俯仰、航向角标准差
 # initial attitude std, roll, pitch and yaw std. [deg, deg, deg]
-initattstd: [ 1, 1, 20 ]
+initattstd: [ 1, 1, 280 ]
 
 # 初始IMU零偏和比例因子标准差, IMU的三个轴
 # initial IMU bias and scale error std, thrss axes of the imu
@@ -71,15 +71,16 @@ initattstd: [ 1, 1, 20 ]
 
 # IMU噪声建模参数, IMU的三个轴
 # IMU noise parameters
+
 imunoise:
-  arw: [0.24, 0.24, 0.24]          # [deg/sqrt(hr)]
-  vrw: [0.24, 0.24, 0.24]          # [m/s/sqrt(hr)]
-  gbstd: [50.0, 50.0, 50.0]        # [deg/hr]
-  abstd: [250.0, 250.0, 250.0]     # [mGal]
-  gsstd: [1000.0, 1000.0, 1000.0]  # [ppm]
-  asstd: [1000.0, 1000.0, 1000.0]  # [ppm]
-  corrtime: 4                # [hr]
+  arw: [0.1, 0.1, 2000]          # [deg/sqrt(hr)]
+  vrw: [2.2, 2.2, 0.2]          # [m/s/sqrt(hr)]
+  gbstd: [0.2,0.2, 0.6]        # [deg/hr]
+  abstd: [1.6, 1.6, 1.6]     # [mGal]
+  gsstd: [300.0, 300.0, 3000.0]  # [ppm]
+  asstd: [300.0, 300.0, 300.0]  # [ppm]
+  corrtime: 1                  # [hr]
 
 # 天线杆臂, IMU坐标系前右下方向
 # antenna lever, forward, right and down in the imu frame. [m]
-antlever: [0.0001,0.0001,0.0001]
+antlever: [0.00,0.00,0.00]

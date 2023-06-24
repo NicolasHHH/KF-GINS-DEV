@@ -77,7 +77,6 @@ imunoise:
   vrw: [0.012, 0.012, 0.012]          # [m/s/sqrt(hr)]
   gbstd: [2,2.5,6]        # [deg/hr]
   abstd: [3.6, 3.6, 3.6]     # [mGal]
-
   gsstd: [300.0, 300.0, 300.0]  # [ppm]
   asstd: [300.0, 300.0, 300.0]  # [ppm]
   corrtime: 10                   # [hr]
