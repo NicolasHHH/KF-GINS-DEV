@@ -87,7 +87,7 @@ typedef struct GINSOptions {
         // 打印初始状态
         // print initial state
         std::cout << " - Initial State: " << std::endl;
-        std::cout << '\t' << "- initial position: ";
+        std::cout << '\t' << "- initial position (rad->deg): ";
         std::cout << std::setprecision(12) << initstate.pos[0] * R2D << "  ";
         std::cout << std::setprecision(12) << initstate.pos[1] * R2D << "  ";
         std::cout << std::setprecision(6) << initstate.pos[2] << " [deg, deg, m] " << std::endl;

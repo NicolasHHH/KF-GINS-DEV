@@ -104,7 +104,7 @@ void GIEngine::newImuProcess() {
     int res = isToUpdate(imupre_.time, imucur_.time, updatetime);
 
     if (res == 0) {
-        // 只传播导航状态
+        // GNSS时间戳不在该帧IMU和上一帧之间或附近，只传播导航状态 Dead-Reckoning
         // only propagate navigation state
         insPropagation(imupre_, imucur_);
     } else if (res == 1) {
@@ -199,16 +199,19 @@ void GIEngine::insPropagation(IMU &imupre, IMU &imucur) {
     double gravity;
     rmrn    = Earth::meridianPrimeVerticalRadius(pvapre_.pos[0]);
     gravity = Earth::gravity(pvapre_.pos);
+    // 地球自转角速度在导航系(n)下投影,
+    // 自转角速度向量与地轴重合，x轴正方向为北，y轴正方向为东，z轴正方向为下
     wie_n << WGS84_WIE * cos(pvapre_.pos[0]), 0, -WGS84_WIE * sin(pvapre_.pos[0]);
+    // 导航系(NED)相对ECEF系的旋转在导航系下的投影
     wen_n << pvapre_.vel[1] / (rmrn[1] + pvapre_.pos[2]), -pvapre_.vel[0] / (rmrn[0] + pvapre_.pos[2]),
         -pvapre_.vel[1] * tan(pvapre_.pos[0]) / (rmrn[1] + pvapre_.pos[2]);
 
     Eigen::Matrix3d temp;
     Eigen::Vector3d accel, omega;
-    double rmh, rnh;
+    double rmh, rnh; // rmh: 半子午圈半径, rnh: 半北纬圈半径
 
-    rmh   = rmrn[0] + pvapre_.pos[2];
-    rnh   = rmrn[1] + pvapre_.pos[2];
+    rmh   = rmrn[0] + pvapre_.pos[2]; // 半径加上高度
+    rnh   = rmrn[1] + pvapre_.pos[2]; // 半径加上高度
     accel = imucur.dvel / imucur.dt;
     omega = imucur.dtheta / imucur.dt;
 
@@ -364,8 +367,8 @@ void GIEngine::EKFPredict(Eigen::MatrixXd &Phi, Eigen::MatrixXd &Qd) {
 
     // 传播系统协方差和误差状态
     // propagate system covariance and error state
-    Cov_ = Phi * Cov_ * Phi.transpose() + Qd;
-    dx_  = Phi * dx_;
+    Cov_ = Phi * Cov_ * Phi.transpose() + Qd;  // P_k+1|k = F_k * P_k|k * F_k^T + Q_k
+    dx_  = Phi * dx_;                         // dx_k+1|k = F_k * dx_k|k
 }
 
 void GIEngine::EKFUpdate(Eigen::MatrixXd &dz, Eigen::MatrixXd &H, Eigen::MatrixXd &R) {
@@ -377,8 +380,8 @@ void GIEngine::EKFUpdate(Eigen::MatrixXd &dz, Eigen::MatrixXd &H, Eigen::MatrixX
 
     // 计算Kalman增益
     // Compute Kalman Gain
-    auto temp         = H * Cov_ * H.transpose() + R;
-    Eigen::MatrixXd K = Cov_ * H.transpose() * temp.inverse();
+    auto temp         = H * Cov_ * H.transpose() + R; // S_k = H_k * P_k|k * H_k^T + R_k
+    Eigen::MatrixXd K = Cov_ * H.transpose() * temp.inverse(); // K_k = P_k|k * H_k^T * S_k^-1
 
     // 更新系统误差状态和协方差
     // update system error state and covariance
@@ -398,7 +401,7 @@ void GIEngine::stateFeedback() {
     Eigen::Vector3d vectemp;
 
     // 位置误差反馈
-    // posisiton error feedback
+    // position error feedback
     Eigen::Vector3d delta_r = dx_.block(P_ID, 0, 3, 1);
     Eigen::Matrix3d Dr_inv  = Earth::DRi(pvacur_.pos);
     pvacur_.pos -= Dr_inv * delta_r;

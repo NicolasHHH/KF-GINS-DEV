@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
 
     if (argc != 2) {
         std::cout << "usage: KF-GINS kf-gins.yaml" << std::endl;
+        std::cout << "set the path of the configuration file!" << std::endl;
         return -1;
     }
 
